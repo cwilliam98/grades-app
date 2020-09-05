@@ -3,7 +3,7 @@ import GradeDataService from '../services/GradeService';
 
 const AddGrade = () => {
   const initialGradeState = {
-    _id: null,
+    id: null,
     name: '',
     subject: '',
     type: '',
@@ -28,7 +28,7 @@ const AddGrade = () => {
     GradeDataService.create(data)
       .then((response) => {
         setGrade({
-          _id: response.data._id,
+          id: response.data.id,
           name: response.data.name,
           subject: response.data.img,
           type: response.data.type,
