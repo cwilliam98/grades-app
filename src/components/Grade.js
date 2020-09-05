@@ -2,21 +2,37 @@ import React, { useState, useEffect } from 'react';
 import GradeDataService from '../services/GradeService';
 
 const Grade = (props) => {
-  const initialGradeState = {
-    id: null,
-    name: '',
-    subject: '',
-    type: '',
-    value: '',
-  };
+  const initialGradeState = [
+    {
+      id: null,
+      name: '',
+      subject: '',
+      type: '',
+      value: '',
+    },
+  ];
   const [currentGrade, setCurrentGrade] = useState(initialGradeState);
   const [message, setMessage] = useState('');
 
   const getGrade = (id) => {
     GradeDataService.get(id)
       .then((response) => {
-        setCurrentGrade(response.data);
-        console.log(response.data);
+        let newGrade = {};
+        response.data.filter(
+          ({ id, lastModified, name, subject, type, value }) => {
+            console.log(id);
+            newGrade = { id, lastModified, name, subject, type, value };
+          }
+        );
+        const { id, lastModified, name, subject, type, value } = newGrade;
+        setCurrentGrade({
+          id,
+          lastModified,
+          name,
+          subject,
+          type,
+          value,
+        });
       })
       .catch((e) => {
         console.log(e);
@@ -43,7 +59,8 @@ const Grade = (props) => {
   };
 
   const deleteGrade = () => {
-    console.log(currentGrade);
+    console.log(`Grade to delete`);
+    console.log(`${currentGrade}`);
     GradeDataService.remove(currentGrade.id)
       .then((response) => {
         props.history.push('/grade');
