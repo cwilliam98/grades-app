@@ -16,8 +16,8 @@ const update = (id, data) => {
   return http.put(`/grade/${id}`, data);
 };
 
-const remove = (id) => {
-  return http.delete(`/grade/${id}`);
+const remove = (_id) => {
+  return http.delete(`/grade/${_id}`);
 };
 
 const removeAll = () => {
